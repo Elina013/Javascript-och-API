@@ -1,29 +1,45 @@
-// "https://api.sl.se/api2/typeahead.<FORMAT>?key=<DIN NYCKEL>&searchstring=<SÖKORD>&stationsonly=<ENDAST STATIONER>&maxresults<MAX ANTAL SVAR>"
-// "https://api.sl.se/api2/realtimedeparturesV4.<FORMAT>?key=<DIN API NYCKEL>&siteid=<SITEID>&timewindow=<TIMEWINDOW>"
+// 3f5d5d5d19074758aa8bc1cc81fe9a29
 
-function getDateTime() {
-    var currentTime = new Date();
+// Funktion för att hämta bussavgångar från Huddinge sjukhus
+function getBusDepartures() {
+    const apiKey = '';
+    const busStopId = '9001'; // Huddinge sjukhus hållplats ID, du kan behöva kontrollera detta
+  
+    fetch(`https://api.sl.se/api2/realtimedeparturesV4.json?key=${apiKey}&siteid=${busStopId}&timewindow=60`)
+      .then(response => response.json())
+      .then(data => {
+        console.log('Bussavgångar från Huddinge sjukhus:');
+        data.ResponseData.Buses.forEach((departure) => {
+          console.log(`Linje ${departure.LineNumber}: Avgår om ${departure.DisplayTime}`);
+        });
+      })
+      .catch(error => {
+        console.error('Fel vid hämtning av bussavgångar:', error);
+      });
+  }
+  
+  // Funktion för att hämta tågavgångar från Flemingsbergs station
+  function getTrainDepartures() {
+    const apiKey = '3f5d5d5d19074758aa8bc1cc81fe9a29';
+    const stationId = '9112'; // Flemingsbergs station ID, du kan behöva kontrollera detta
+  
+    fetch(`https://api.sl.se/api2/realtimedeparturesV4.json?key=${apiKey}&siteid=${stationId}&timewindow=60`)
+      .then(response => response.json())
+      .then(data => {
+        console.log('Tågavgångar från Flemingsbergs station:');
+        data.ResponseData.Metros.forEach((departure) => {
+          console.log(`Linje ${departure.LineNumber}: Avgår om ${departure.DisplayTime}`);
+        });
+      })
+      .catch(error => {
+        console.error('Fel vid hämtning av tågavgångar:', error);
+      });
+  }
+  
+  // Anropa funktionerna för att hämta avgångar
+  getBusDepartures();
+  getTrainDepartures();
+  
 
-    var day = currentTime.toLocaleDateString(undefined, { weekday: 'short' });
-    var date = currentTime.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
-    var time = currentTime.toLocaleTimeString();
 
-    return {
-        day: day, 
-        date: date, 
-        time: time
-    };
-}
-
-function updateClock() {
-    var datetime = getDateTime();
-    var datetimeInfo = document.getElementById("datetime-info");
-    datetimeInfo.innerHTML = "Dag: " + datetime.day + "<br>Datum: " + datetime.date + "<br>Tid: " + datetime.time;
-}
-
-// Uppdatera tiden varje sekund
-setInterval(updateClock, 1000);
-
-// Uppdatera tiden när sidan laddas för första gången
-updateClock();
 

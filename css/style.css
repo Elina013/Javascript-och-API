@@ -29,13 +29,28 @@ body {
     background-color: #555;
 }
 
-.conteiner {
-    display: flex;
+h1 {
+    text-align: center;
 }
 
-.column {
-    flex: 1;
-    padding: 10px;
+h2 {
+    margin-top: 20px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin: 5px 0;
+}
+
+#bus-departures, #train-departures {
+    width: 45%;
+    margin: 0 auto;
     border: 1px solid #ccc;
-    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #ccc;
 }

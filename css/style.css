@@ -29,28 +29,40 @@ body {
     background-color: #555;
 }
 
-h1 {
+.parent {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 30px;
+    grid-row-gap: 30px;
+
+    text-align: center;
+
+    display: flex;
+
+    justify-content: center;
+
+    margin-top: 3%;
+}
+
+#sl-info { grid-area: 1 / 1 / 2 / 2; }
+#Väderinformation { grid-area: 1 / 2 / 2 / 3; }
+#Bokinformation { grid-area: 1 / 3 / 2 / 4; }
+
+
+#sl-info{
+    width: 40%;
+    height: 70vh;
+    
+     box-shadow: -5px -5px -10px dimgray;
+
+     background-color:#011626;
+     border-radius : 15px;
+     color: wheat;
+
     text-align: center;
 }
 
-h2 {
-    margin-top: 20px;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-li {
-    margin: 5px 0;
-}
-
-#bus-departures, #train-departures {
-    width: 45%;
-    margin: 0 auto;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 5px #ccc;
-}
+#sl-info p{
+    margin-left: 5%;
+}  

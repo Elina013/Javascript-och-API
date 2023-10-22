@@ -1,3 +1,5 @@
+
+
 // 3f5d5d5d19074758aa8bc1cc81fe9a29
 async function HämtaData(siteId) {
   let ResponseData = await fetch(`https://api.sl.se/api2/realtimedeparturesV4.json?key=3f5d5d5d19074758aa8bc1cc81fe9a29&siteid=${siteId}&timewindow=15`);
@@ -113,3 +115,81 @@ async function VisaTransportInfo() {
 
 // Visa informationen första gången
 VisaTransportInfo();
+
+
+async function VisaVäderData() {
+  try {
+    const apiKey = "7580324fc9821a21bbb26bd4a0d67d77"; // Byt ut med din faktiska API-nyckel
+    const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=Huddinge&appid=${apiKey}&units=metric`;
+
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      throw new Error("Kunde inte hämta data från API:en");
+    }
+
+    const data = await response.json();
+    console.log(data);
+
+    for (let i = 0; i < 8; i++) {
+      const infoHolder = document.createElement("div");
+      const day = document.createElement("h1");
+      const temp = document.createElement("p");
+      const temp_max = document.createElement("p");
+      const temp_min = document.createElement("p");
+
+      const date = new Date();
+      date.setDate(date.getDate() + i);
+
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const dayName = days[date.getDay()];
+
+      day.textContent = `${dayName}, ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+      temp.textContent = `${Math.floor(data.list[i].main.temp)}°C`;
+      temp_max.textContent = `Max: ${Math.floor(data.list[i].main.temp_max)}°C`;
+      temp_min.textContent = `Min: ${Math.floor(data.list[i].main.temp_min)}°C`;
+
+      Väderinformation.appendChild(infoHolder);
+      infoHolder.appendChild(day);
+      infoHolder.appendChild(temp);
+      infoHolder.appendChild(temp_max);
+      infoHolder.appendChild(temp_min);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+VisaVäderData();
+
+async function fetchBookReviews() {
+  try {
+    // Gör en asynkron HTTP-begäran till New York Times API för att hämta bokrecensioner.
+    const response = await fetch("https://api.nytimes.com/svc/books/v3/reviews.json?author=Stephen+King&api-key=eMgOCw250nP7GfVOxYQVuXGToz3GzjSy");
+
+    if (!response.ok) {
+      throw new Error("Kunde inte hämta data från API:en");
+    }
+
+    // Konvertera API-svaret till JSON-format.
+    const data = await response.json();
+
+    console.log(data); // Skriv ut API-svaret i konsolen.
+
+    // Loopa igenom och visa högst 10 boktitlar.
+    for (let i = 0; i < Math.min(10, data.results.length); i++) {
+      const infoHolder = document.createElement("div"); // Skapa en div för att hålla bokinformationen.
+      const bookTitle = document.createElement("h1"); // Skapa ett h1-element för boktiteln.
+
+      // Sätt textinnehållet för boktiteln från API-svaret.
+      bookTitle.textContent = data.results[i].book_title;
+
+      Bokinformation.appendChild(infoHolder); // Lägg till infoHolder i Bokinformation-elementet på webbsidan.
+      infoHolder.appendChild(bookTitle); // Lägg till boktiteln i infoHolder-elementet.
+    }
+  } catch (error) {
+    console.error(error); // Hantera fel om något går fel vid hämtningen av data.
+  }
+}
+
+fetchBookReviews(); // Anropa funktionen för att hämta och visa bokrecensioner.

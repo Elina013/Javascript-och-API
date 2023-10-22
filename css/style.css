@@ -66,3 +66,43 @@ body {
 #sl-info p{
     margin-left: 5%;
 }  
+
+#Väderinformation{
+    width: 40%;
+    height: 70vh;
+    
+     box-shadow: -5px -5px -10px dimgray;
+
+     background-color:#013a63;
+     border-radius : 15px;
+     color: wheat;
+
+    overflow:auto;
+}
+    
+#Väderinformation p{
+
+    
+    font-size: medium;
+    
+    width: fit-content;
+    
+    margin: 2.4%;
+    margin-left: 45%;
+    
+    border-radius: 5px;
+    border: solid 2px;
+}
+
+#Bokinformation{
+    width: 40%;
+    height: 70vh;
+    
+     box-shadow: -5px -5px -10px dimgray;
+
+     background-color:#01497c;
+     border-radius : 15px;
+     color: wheat;
+
+    overflow:auto;
+}
